@@ -77,8 +77,22 @@ WSGI_APPLICATION = 'newproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',     #postgresql as DB backend
+        'NAME': 'mydatabase',     #Database name
+        'USER': 'myuser',         #DB username
+        'PASSWORD': 'mypassword', #DB password
+        'HOST': 'db',             #Hostname of the postgresql container which matches docker-compose service name
+        'PORT': '5432',           #Default postgresql port
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',    #matches Redis service in docker-compose
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }    
     }
 }
 
